@@ -14,7 +14,7 @@
             width: 900px;
             background-color: #DDE2DD;
             padding: 10px 0 5px 20px;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
             font-family: helvetica;
             border-radius: 3px;
             cursor: pointer;
@@ -59,7 +59,12 @@
         var key = "12348787147fd5d552a7ac6011c5f8c36c5feac2"
         $.ajax({
                 url: "https://api.locu.com/v1_0/venue/search/",
-                data: {api_key: key, location: "37.771139,-122.405055", has_menu: true},
+                data: {
+                    api_key: key,
+                    location: "37.771139,-122.405055",
+                    has_menu: true,
+                    category: "restaurant",
+                },
                 dataType: "jsonp",
                 success: function(obj){
                     var rests = obj.objects;
@@ -69,9 +74,6 @@
                             url: "https://api.locu.com/v1_0/venue/"+ obj.objects[i].id + "/",
                             data: {
                                 api_key: key,
-                                location: "37.771139,-122.405055",
-                                category: "restaurant",
-                                has_menu: true,
                             },
                             dataType: "jsonp",
                             success: function(obj){
