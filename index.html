@@ -28,12 +28,12 @@
             text-align: center;
         }
         .rest {
-            font-size: 20px;
+            font-size: 40px;
             font-style: italic;
             float: left;
         }
         .price {
-            font-size: 20px;
+            font-size: 40px;
             float: right;
             margin-right: 4px;
         }
@@ -83,7 +83,7 @@
                                 div.append($("<div>", {class: "desc"}).text(item.description))
                                 var details = $("<div>", {class: "details"});
                                 details.append($("<div>", {class: "rest"}).text(rest.name))
-                                details.append($("<div>", {class: "price"}).text(item.price))
+                                details.append($("<div>", {class: "price"}).text("$" + item.price))
                                 div.append(details);
                                 div.bind("click", function(){
                                     window.location = rest.website_url
