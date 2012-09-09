@@ -43,6 +43,10 @@
         body {
             background-color: #EEF;
         }
+        .search {
+            font-size: 40px;
+            color: #777;
+        }
 
     </style>
 </head>
@@ -53,6 +57,7 @@
     <h2>
         Try This:
     </h2>
+    <p class="search">Searching the area...</p>
     <div id="choices">
     </div>
     <script type="text/javascript">
@@ -92,8 +97,9 @@
                                 })
                                 $("#choices").prepend(div)
                                 div.slideDown();
+                                $(".search").text("Searching for even more food...")
                                 i++;
-                                setTimeout(next, 3000);
+                                setTimeout(next, 5000);
                             }
                         });
                     }
