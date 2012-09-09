@@ -21,10 +21,12 @@
         }
         .name {
             font-size: 80px;
+            font-weight: bold;
             text-align: center;
         }
         .desc {
-            font-size: 60px;
+            font-size: 50px;
+            color: #222;
             text-align: center;
         }
         .rest {
@@ -84,7 +86,11 @@
                             success: function(obj){
                                 var rest = obj.objects[0];
                                 var items = rest.menus[0].sections[0]
+                                console.log(rest.name, items);
                                 var item = items.subsections[0].contents[0]
+                                if (!item.name) {
+                                    item = items.subsections[0].contents[1]
+                                }
                                 var div = $("<div>", {class: "option"}).hide()
                                 div.append($("<div>", {class: "name"}).text(item.name))
                                 div.append($("<div>", {class: "desc"}).text(item.description))
