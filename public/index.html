@@ -1,0 +1,87 @@
+<html>
+<head>
+    <title>HungerFeed</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <style>
+        .option {
+            box-shadow: 3px 3px 3px 3px;
+            width: 300px;
+            background-color: #DDD;
+            padding: 10px 0 5px 20px;
+            margin-bottom: 10px;
+            font-family: helvetica;
+        }
+        .name {
+            font-size: 20px;
+            text-align: center;
+        }
+        .rest {
+            font-size: 12px;
+            font-style: italic;
+            float: left;
+        }
+        .price {
+            font-size: 12px;
+            float: right;
+            margin-right: 4px;
+        }
+        .details {
+            height: 15px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>
+        Hungry?
+    </h1>
+    <h2>
+        Try This:
+    </h2>
+    <div id="choices">
+    </div>
+    <script type="text/javascript">
+        var key = "12348787147fd5d552a7ac6011c5f8c36c5feac2"
+        $.ajax({
+                url: "https://api.locu.com/v1_0/venue/search/",
+                data: {api_key: key, location: "37.771139,-122.405055", has_menu: true},
+                dataType: "jsonp",
+                success: function(obj){
+                    var rests = obj.objects;
+                    var i = 0;
+                    function next() {
+                        $.ajax({
+                            url: "https://api.locu.com/v1_0/venue/"+ obj.objects[i].id + "/",
+                            data: {
+                                api_key: key,
+                                location: "37.771139,-122.405055",
+                                category: "restaurant",
+                                has_menu: true,
+                            },
+                            dataType: "jsonp",
+                            success: function(obj){
+                                var rest = obj.objects[0];
+                                var items = rest.menus[0].sections[0]
+                                var item = items.subsections[0].contents[0]
+                                var div = $("<div>", {class: "option"}).hide()
+                                div.append($("<div>", {class: "name"}).text(item.name))
+                                div.append($("<div>", {class: "desc"}).text(item.description))
+                                var details = $("<div>", {class: "details"});
+                                details.append($("<div>", {class: "rest"}).text(rest.name))
+                                details.append($("<div>", {class: "price"}).text(item.price))
+                                div.append(details);
+                                div.bind("click", function(){
+                                    window.location = rest.website_url
+                                })
+                                $("#choices").prepend(div)
+                                div.slideDown();
+                                i++;
+                                setTimeout(next, 3000);
+                            }
+                        });
+                    }
+                    next(i);
+                }
+        });
+    </script>
+</body>
